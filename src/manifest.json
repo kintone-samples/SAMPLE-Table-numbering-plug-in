@@ -1,0 +1,35 @@
+{
+  "manifest_version": 1,
+  "version": 1,
+  "type": "APP",
+  "desktop": {
+    "js": [
+      "js/desktop.js"
+    ]
+  },
+  "icon": "image/icon.png",
+  "config": {
+    "html": "html/config.html",
+    "js": [
+      "https://js.kintone.com/jquery/3.3.1/jquery.min.js",
+      "js/config.js"
+    ],
+    "css": [
+      "css/51-modern-default.css",
+      "css/config.css"
+    ],
+    "required_params": [
+      "number_field",
+      "table_field"
+    ]
+  },
+  "name": {
+    "en": "Table Numbering Plug-in"
+  },
+  "description": {
+    "en": "This sample plugin automatically adds row numbers to tables every time the record is saved."
+  },
+  "homepage_url": {
+    "en": "https://developer.kintone.io/hc/en-us/articles/115008737548"
+  }
+}
