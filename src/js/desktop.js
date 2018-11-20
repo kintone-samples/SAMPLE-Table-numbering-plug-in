@@ -7,15 +7,15 @@
 (function(PLUGIN_ID) {
     'use strict';
 
-    // Get plugin configuration settings
+    // Get plug-in configuration settings
     var CONFIG = kintone.plugin.app.getConfig(PLUGIN_ID);
-    // Get each settings
+    // Get each setting
     if (!CONFIG) {
         return false;
     }
 
-    var TABLEFIELD = CONFIG.table_field; //field code of the table
-    var NUMBERFIELD = CONFIG.number_field; //field code of number field in the table
+    var TABLEFIELD = CONFIG.table_field; // Field code of the table
+    var NUMBERFIELD = CONFIG.number_field; // Field code of number field in the table
 
     var events = [
         'app.record.create.submit',
@@ -24,7 +24,7 @@
     kintone.events.on(events, function(event) {
         var record = event.record;
 
-        //auto-number the table rows
+        // Auto-number the table rows
         var count = record[TABLEFIELD].value.length;
         for (var i = 0; i < count; i++) {
             record[TABLEFIELD].value[i].value[NUMBERFIELD].value = i + 1;
