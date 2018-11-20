@@ -1,5 +1,5 @@
 /*
- * This sample plugin automatically adds row numbers to tables every time the record is saved.
+ * This sample plug-in automatically adds row numbers to table rows each time the record is saved.
  * Copyright (c) 2018 Cybozu
  *
  * Licensed under the MIT License
