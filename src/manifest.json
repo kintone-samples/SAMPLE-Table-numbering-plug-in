@@ -27,7 +27,7 @@
     "en": "Table Numbering Plug-in"
   },
   "description": {
-    "en": "This sample plugin automatically adds row numbers to tables every time the record is saved."
+    "en": "This sample plug-in automatically adds row numbers to table rows each time the record is saved."
   },
   "homepage_url": {
     "en": "https://developer.kintone.io/hc/en-us/articles/115008737548"
