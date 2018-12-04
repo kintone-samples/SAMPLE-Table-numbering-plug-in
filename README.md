@@ -47,3 +47,6 @@ Reference: https://get.kintone.help/hc/en-us/articles/115001511188-Adding-Plug-i
 As this repo exists for educational purposes, we will most likely turn down pull requests that contain updates with new features.  
 Please feel free to host plug-ins with new features on your own repository.  
 Bug fixes are happily accepted.
+
+## More information
+More detailed information on the plug-in can be found here https://developer.kintone.io/hc/en-us/articles/360012420813
