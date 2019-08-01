@@ -7,16 +7,9 @@
 (function(PLUGIN_ID) {
   'use strict';
 
-  // Get plug-in configuration settings
-  var CONFIG = kintone.plugin.app.getConfig(PLUGIN_ID);
-  // Get each setting
-  if (!CONFIG) {
-    return false;
-  }
-
+  var CONFIG = kintone.plugin.app.getConfig(PLUGIN_ID); // Get plug-in configuration settings
   var TABLEFIELD = CONFIG.table_field; // Field code of the table
   var NUMBERFIELD = CONFIG.number_field; // Field code of number field in the table
-
   // Disable number fields in table at these events
   var disableEvents = [
     'app.record.edit.show',
@@ -24,20 +17,26 @@
     'app.record.edit.change.' + TABLEFIELD,
     'app.record.create.change.' + TABLEFIELD
   ];
+  var numberEvents;
+  var i;
+  // Get each setting
+  if (!CONFIG) {
+    return false;
+  }
 
   kintone.events.on(disableEvents, function(event) {
     var record = event.record;
 
     // Disable number fields in table rows
     var count = record[TABLEFIELD].value.length;
-    for (var i = 0; i < count; i++) {
+    for (i = 0; i < count; i++) {
       record[TABLEFIELD].value[i].value[NUMBERFIELD].disabled = true;
     }
     return event;
   });
 
   // Number table rows at these events
-  var numberEvents = [
+  numberEvents = [
     'app.record.create.submit',
     'app.record.edit.submit'
   ];
@@ -46,7 +45,7 @@
 
     // Auto-number the table rows
     var count = record[TABLEFIELD].value.length;
-    for (var i = 0; i < count; i++) {
+    for (i = 0; i < count; i++) {
       record[TABLEFIELD].value[i].value[NUMBERFIELD].value = i + 1;
     }
 
