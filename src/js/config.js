@@ -10,6 +10,9 @@ jQuery.noConflict();
   // Get configuration settings
 
   var CONF = kintone.plugin.app.getConfig(PLUGIN_ID);
+  var $form = $('.js-submit-settings');
+  var $cancelButton = $('.js-cancel-button');
+  var $number = $('select[name="js-select-number-field"]');
 
   function escapeHtml(htmlstr) {
     return htmlstr.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -20,27 +23,36 @@ jQuery.noConflict();
     // Retrieve field information, then set drop-down
     return kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'GET',
       {'app': kintone.app.getId()}).then(function(resp) {
+      var key;
+      var key2;
+      var prop;
+      var field;
+      var $option;
 
-      for (var key in resp.properties) {
-        if (!resp.properties.hasOwnProperty(key)) {
+      console.log(resp);
+
+      for (key in resp.properties) {
+        if (!Object.prototype.hasOwnProperty.call(resp.properties, key)) {
           continue;
         }
-        var prop = resp.properties[key];
-
+        prop = resp.properties[key];
         if (prop.type === 'SUBTABLE') {
-          for (var key2 in prop.fields) {
-            var field = prop.fields[key2];
-            var $option = $('<option>');
+          for (key2 in prop.fields) {
+            if (!Object.prototype.hasOwnProperty.call(prop.fields, key2)) {
+              continue;
+            }
+            field = prop.fields[key2];
+            $option = $('<option>');
             if (field.type === 'NUMBER') {
               $option.attr('value', prop.code + ',' + field.code); // Set table code and number field code
               $option.text(escapeHtml(field.label));
-              $('#select_number_field').append($option.clone());
+              $number.append($option.clone());
             }
           }
         }
       }
       // Set default values
-      $('#select_number_field').val(CONF.table_field + ',' + CONF.number_field);
+      $number.val(CONF.table_field + ',' + CONF.number_field);
     }, function(resp) {
       return alert('Failed to retrieve field(s) information');
     });
@@ -49,9 +61,10 @@ jQuery.noConflict();
     // Set drop-down list
     setDropDown();
     // Set input values when 'Save' button is clicked
-    $('#check-plugin-submit').click(function() {
+    $form.on('submit', function(e) {
       var config = [];
-      var number_field = $('#select_number_field').val();
+      var number_field = $number.val();
+      e.preventDefault();
       // Check required fields
       if (number_field === '') {
         alert('Please set required field(s)');
@@ -61,11 +74,14 @@ jQuery.noConflict();
       config.table_field = number_field.split(',')[0];// Set table field code
       config.number_field = number_field.split(',')[1];// Set number field code
 
-      kintone.plugin.app.setConfig(config);
+      kintone.plugin.app.setConfig(config, function() {
+        alert('The plug-in settings have been saved. Please update the app!');
+        window.location.href = '/k/admin/app/flow?app=' + kintone.app.getId();
+      });
     });
     // Process when 'Cancel' is clicked
-    $('#check-plugin-cancel').click(function() {
-      history.back();
+    $cancelButton.on('click', function() {
+      window.location.href = '/k/admin/app/' + kintone.app.getId() + '/plugin/';
     });
   });
 })(jQuery, kintone.$PLUGIN_ID);
