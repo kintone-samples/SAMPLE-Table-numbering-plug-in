@@ -1,24 +1,25 @@
 <!-- MIT License
 Copyright (c) 2018 Cybozu
 https://github.com/kintone/SAMPLE-Table-numbering-plug-in/blob/master/LICENSE -->
-<div>
-	<div class="block">
-		<label class="kintoneplugin-label">
-			<span id ="container_label">Row Number</span>
-			<span class="kintoneplugin-require">*</span>
-		</label>
-		<div class="kintoneplugin-row">Please select a Number field that exists in a table.<br />
-			Row numbers will automatically be placed into this Number field.</div>
-		<div class="kintoneplugin-select-outer">
-			<div class="kintoneplugin-select">
-				<select id="select_number_field" name="select_number_field">
-					<option value="">-----</option>
-				</select>
+<section>
+	<form class="js-submit-settings">
+		<div class="kintoneplugin-row">
+			<label for="select_number_field" class="kintoneplugin-label">Row Number
+				<span class="kintoneplugin-require">*</span>
+			</label>
+			<p class="kintoneplugin-desc">Please select a Number field that exists in a table.<br />
+				Row numbers will automatically be placed into this Number field.</p>
+			<div class="kintoneplugin-select-outer">
+				<div class="kintoneplugin-select">
+					<select id="select-number-field" name="js-select-number-field">
+						<option value="">-----</option>
+					</select>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="block">
-		<button type="button" id="check-plugin-cancel" class="kintoneplugin-button-dialog-cancel">　Cancel　</button>
-		<button type="button" id="check-plugin-submit" class="kintoneplugin-button-dialog-ok">　Save　</button>
-	</div>
-</div>
+		<p class="kintoneplugin-row">
+			<button type="button" class="js-cancel-button kintoneplugin-button-dialog-cancel">　Cancel　</button>
+			<button class="kintoneplugin-button-dialog-ok">　Save　</button>
+		</p>
+	</form>
+</section>
