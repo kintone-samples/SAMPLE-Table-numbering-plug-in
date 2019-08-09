@@ -1,0 +1,3 @@
+.kintoneplugin-desc::first-letter {
+    text-transform: capitalize;
+}
