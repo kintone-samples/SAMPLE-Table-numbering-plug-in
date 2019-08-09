@@ -15,12 +15,11 @@
       "js/config.js"
     ],
     "css": [
-      "css/51-modern-default.css",
-      "css/config.css"
+      "css/51-modern-default.css"
     ],
     "required_params": [
-      "number_field",
-      "table_field"
+      "number",
+      "table"
     ]
   },
   "name": {
