@@ -23,13 +23,7 @@ jQuery.noConflict();
     // Retrieve field information, then set drop-down
     return kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'GET',
       {'app': kintone.app.getId()}).then(function(resp) {
-      var key;
-      var key2;
-      var prop;
-      var field;
-      var $option;
-
-      console.log(resp);
+      var key, key2, prop, field, $option;
 
       for (key in resp.properties) {
         if (!Object.prototype.hasOwnProperty.call(resp.properties, key)) {
@@ -42,7 +36,7 @@ jQuery.noConflict();
               continue;
             }
             field = prop.fields[key2];
-            $option = $('<option>');
+            $option = $('<option></option>');
             if (field.type === 'NUMBER') {
               $option.attr('value', prop.code + ',' + field.code); // Set table code and number field code
               $option.text(escapeHtml(field.label));
@@ -52,8 +46,8 @@ jQuery.noConflict();
         }
       }
       // Set default values
-      $number.val(CONF.table_field + ',' + CONF.number_field);
-    }, function(resp) {
+      $number.val(CONF.table + ',' + CONF.number);
+    }, function() {
       return alert('Failed to retrieve field(s) information');
     });
   }
@@ -63,17 +57,12 @@ jQuery.noConflict();
     // Set input values when 'Save' button is clicked
     $form.on('submit', function(e) {
       var config = [];
-      var number_field = $number.val();
+      var number = $number.val();
       e.preventDefault();
-      // Check required fields
-      if (number_field === '') {
-        alert('Please set required field(s)');
-        return;
-      }
 
-      config.table_field = number_field.split(',')[0];// Set table field code
-      config.number_field = number_field.split(',')[1];// Set number field code
-
+      config.table = number.split(',')[0];// Set table field code
+      config.number = number.split(',')[1];// Set number field code
+      
       kintone.plugin.app.setConfig(config, function() {
         alert('The plug-in settings have been saved. Please update the app!');
         window.location.href = '/k/admin/app/flow?app=' + kintone.app.getId();
