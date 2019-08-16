@@ -19,8 +19,8 @@
       "css/config.css"
     ],
     "required_params": [
-      "number_field",
-      "table_field"
+      "number",
+      "table"
     ]
   },
   "name": {

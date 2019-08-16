@@ -1,6 +1,3 @@
-/* MIT License */
-/* Copyright (c) 2018 Cybozu */
-/* https://github.com/kintone/SAMPLE-Table-numbering-plug-in/blob/master/LICENSE */
-.block {
-	padding: 0 0 20px 0;
+.kintoneplugin-desc::first-letter {
+    text-transform: capitalize;
 }
