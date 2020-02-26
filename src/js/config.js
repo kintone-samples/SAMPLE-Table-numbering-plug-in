@@ -24,7 +24,7 @@ jQuery.noConflict();
     return KintoneConfigHelper.getFields('NUMBER')
       .then(function(resp) {
         resp.forEach(function(field) {
-          if (field.hasOwnProperty('subtableCode')) {
+          if (field.subtableCode) {
             var $option = $('<option>');
             $option.attr('value', field.subtableCode + ',' + field.code); // Set table code and number field code
             $option.text(escapeHtml(field.label));
