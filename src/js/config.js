@@ -21,35 +21,21 @@ jQuery.noConflict();
 
   function setDropDown() {
     // Retrieve field information, then set drop-down
-    return kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'GET',
-      {'app': kintone.app.getId()}).then(function(resp) {
-      var key, key2, prop, field, $option;
-
-      for (key in resp.properties) {
-        if (!Object.prototype.hasOwnProperty.call(resp.properties, key)) {
-          continue;
-        }
-        prop = resp.properties[key];
-        if (prop.type === 'SUBTABLE') {
-          for (key2 in prop.fields) {
-            if (!Object.prototype.hasOwnProperty.call(prop.fields, key2)) {
-              continue;
-            }
-            field = prop.fields[key2];
-            $option = $('<option></option>');
-            if (field.type === 'NUMBER') {
-              $option.attr('value', prop.code + ',' + field.code); // Set table code and number field code
-              $option.text(escapeHtml(field.label));
-              $number.append($option.clone());
-            }
+    return KintoneConfigHelper.getFields('NUMBER')
+      .then(function(resp) {
+        resp.forEach(function(field) {
+          if (field.subtableCode) {
+            var $option = $('<option>');
+            $option.attr('value', field.subtableCode + ',' + field.code); // Set table code and number field code
+            $option.text(escapeHtml(field.label));
+            $number.append($option.clone());
           }
-        }
-      }
-      // Set default values
-      $number.val(CONF.table + ',' + CONF.number);
-    }, function() {
-      return alert('Failed to retrieve field(s) information');
-    });
+        });
+        // Set default values
+        $number.val(CONF.table + ',' + CONF.number);
+      }, function() {
+        return alert('Failed to retrieve field(s) information');
+      });
   }
   $(document).ready(function() {
     // Set drop-down list
@@ -62,7 +48,7 @@ jQuery.noConflict();
 
       config.table = number.split(',')[0];// Set table field code
       config.number = number.split(',')[1];// Set number field code
-      
+
       kintone.plugin.app.setConfig(config, function() {
         alert('The plug-in settings have been saved. Please update the app!');
         window.location.href = '/k/admin/app/flow?app=' + kintone.app.getId();
